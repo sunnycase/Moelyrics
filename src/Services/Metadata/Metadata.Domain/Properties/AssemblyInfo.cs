@@ -1,0 +1,7 @@
+﻿using System;
+using System.Collections.Generic;
+using System.Runtime.CompilerServices;
+using System.Text;
+
+
+[assembly: InternalsVisibleTo("Metadata.Infrastructure, PublicKey=0024000004800000940000000602000000240000525341310004000001000100b5c41b2dd7b11490fc0ab3e2e932e231039765ba62da553eabd22cf20ca1188508544c622441d4bb7a87a1923e1716ad15a6116a887101d6b49271dff752e550ef0f2fd4473035b5b4d2986a60b5bd25c732c140d13f7eddb041745f03e888aafcf9aed6ec87688eb7c07313947c17564fce243abcec6fbee564fba2e24c2bc9")]

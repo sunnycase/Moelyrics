@@ -3,7 +3,15 @@ Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio 15
 VisualStudioVersion = 15.0.26403.7
 MinimumVisualStudioVersion = 10.0.40219.1
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Moelyrics.Web", "MoeLyrics.Web\Moelyrics.Web.csproj", "{8C7C5063-08EE-4965-A15B-50FCC06B4FAB}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Metadata.Api", "Services\Metadata\Metadata.Api\Metadata.Api.csproj", "{8C7C5063-08EE-4965-A15B-50FCC06B4FAB}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Services", "Services", "{EA701748-4EFE-420E-93AC-0D8464D69AC6}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Metadata", "Metadata", "{6AA56814-4CD8-494C-90AC-649D6BED9E6B}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Metadata.Domain", "Services\Metadata\Metadata.Domain\Metadata.Domain.csproj", "{C3D11954-4045-4864-BBA5-CE1B4E428736}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Metadata.Infrastructure", "Services\Metadata\Metadata.Infrustructure\Metadata.Infrastructure.csproj", "{19A08E27-1D74-48DB-B121-3AC7594847CF}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -15,8 +23,22 @@ Global
 		{8C7C5063-08EE-4965-A15B-50FCC06B4FAB}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{8C7C5063-08EE-4965-A15B-50FCC06B4FAB}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{8C7C5063-08EE-4965-A15B-50FCC06B4FAB}.Release|Any CPU.Build.0 = Release|Any CPU
+		{C3D11954-4045-4864-BBA5-CE1B4E428736}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{C3D11954-4045-4864-BBA5-CE1B4E428736}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{C3D11954-4045-4864-BBA5-CE1B4E428736}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{C3D11954-4045-4864-BBA5-CE1B4E428736}.Release|Any CPU.Build.0 = Release|Any CPU
+		{19A08E27-1D74-48DB-B121-3AC7594847CF}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{19A08E27-1D74-48DB-B121-3AC7594847CF}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{19A08E27-1D74-48DB-B121-3AC7594847CF}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{19A08E27-1D74-48DB-B121-3AC7594847CF}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(NestedProjects) = preSolution
+		{8C7C5063-08EE-4965-A15B-50FCC06B4FAB} = {6AA56814-4CD8-494C-90AC-649D6BED9E6B}
+		{6AA56814-4CD8-494C-90AC-649D6BED9E6B} = {EA701748-4EFE-420E-93AC-0D8464D69AC6}
+		{C3D11954-4045-4864-BBA5-CE1B4E428736} = {6AA56814-4CD8-494C-90AC-649D6BED9E6B}
+		{19A08E27-1D74-48DB-B121-3AC7594847CF} = {6AA56814-4CD8-494C-90AC-649D6BED9E6B}
 	EndGlobalSection
 EndGlobal
