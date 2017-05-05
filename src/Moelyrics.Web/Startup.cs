@@ -9,6 +9,9 @@ using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Logging;
 using Microsoft.AspNetCore.Mvc;
 using Moelyrics.Web.Policies;
+using Moelyrics.Web.Infrastructure;
+using Microsoft.EntityFrameworkCore;
+using System.Reflection;
 
 namespace Moelyrics.Web
 {
@@ -20,7 +23,9 @@ namespace Moelyrics.Web
                 .SetBasePath(env.ContentRootPath)
                 .AddJsonFile("appsettings.json", optional: false, reloadOnChange: true)
                 .AddJsonFile($"appsettings.{env.EnvironmentName}.json", optional: true)
+                .AddUserSecrets<Startup>()
                 .AddEnvironmentVariables();
+
             Configuration = builder.Build();
         }
 
@@ -31,20 +36,31 @@ namespace Moelyrics.Web
         {
             // Add framework services.
             services.AddMvc();
-            services.AddApiVersioning(o=>
+            services.AddApiVersioning(o =>
             {
                 o.AssumeDefaultVersionWhenUnspecified = true;
                 o.DefaultApiVersion = new ApiVersion(1, 0);
             });
             services.AddCors(o =>
             {
-                o.AddPolicy("AllowAllOrigins", p => p.AllowAnyOrigin());
+                o.AddPolicy("CorsPolicy", p => p.AllowAnyOrigin()
+                    .AllowAnyHeader()
+                    .AllowAnyMethod()
+                    .AllowCredentials());
                 o.DefaultPolicyName = "AllowAllOrigins";
             });
             services.AddAuthorization(o =>
             {
                 o.AddPolicy(AuthorizationPolicies.AcquireCreateNew, p => p.RequireRole("CreateNew"));
             });
+            services.AddDbContext<AppDbContext>(builder =>
+            {
+                builder.UseSqlite(Configuration.GetConnectionString("appdb"),
+                    sqlOptions =>
+                    {
+                        sqlOptions.MigrationsAssembly(typeof(Startup).GetTypeInfo().Assembly.GetName().Name);
+                    });
+            }, ServiceLifetime.Scoped);
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
@@ -53,11 +69,11 @@ namespace Moelyrics.Web
             loggerFactory.AddConsole(Configuration.GetSection("Logging"));
             loggerFactory.AddDebug();
 
-            if(env.IsDevelopment())
+            if (env.IsDevelopment())
             {
                 app.UseBrowserLink();
             }
-            
+
             app.UseMvc(routes =>
             {
                 //routes.MapRoute

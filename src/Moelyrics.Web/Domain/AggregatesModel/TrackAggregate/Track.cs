@@ -10,7 +10,7 @@ namespace Moelyrics.Web.Domain.AggregatesModel.TrackAggregate
     public class Track : Entity, IAggregateRoot
     {
         private int? _albumId;
-        private List<ArtistAlbum> _artists;
+        private List<AlbumArtist> _artists;
         public IEnumerable<Artist> Artists => _artists.Select(o => o.Artist).ToList().AsReadOnly();
 
         public string Title { get; private set; }
@@ -19,7 +19,7 @@ namespace Moelyrics.Web.Domain.AggregatesModel.TrackAggregate
 
         protected Track()
         {
-            _artists = new List<ArtistAlbum>();
+            _artists = new List<AlbumArtist>();
         }
 
         public Track(string title, int? albumId = null, string sha1 = null, TimeSpan? length = null)

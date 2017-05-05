@@ -11,6 +11,8 @@ using Microsoft.EntityFrameworkCore.Metadata.Builders;
 using Moelyrics.Web.Domain.AggregatesModel.AlbumAggregate;
 using Microsoft.EntityFrameworkCore.Metadata;
 using Moelyrics.Web.Domain.AggregatesModel.TrackAggregate;
+using Moelyrics.Web.Domain.AggregatesModel.LyricAggregate;
+using Moelyrics.Web.Domain.AggregatesModel;
 
 namespace Moelyrics.Web.Infrastructure
 {
@@ -19,6 +21,9 @@ namespace Moelyrics.Web.Infrastructure
         public DbSet<Artist> Artists { get; set; }
         public DbSet<Album> Albums { get; set; }
         public DbSet<Track> Tracks { get; set; }
+        public DbSet<Lyric> Lyrics { get; set; }
+        internal DbSet<AlbumArtist> AlbumArtists { get; set; }
+        internal DbSet<TrackArtist> TrackArtists { get; set; }
 
         private readonly IMediator _mediator;
         public AppDbContext(DbContextOptions options, IMediator mediator) : base(options)
@@ -31,6 +36,9 @@ namespace Moelyrics.Web.Infrastructure
             modelBuilder.Entity<Artist>(ConfigureArtist);
             modelBuilder.Entity<Album>(ConfigureAlbum);
             modelBuilder.Entity<Track>(ConfigureTrack);
+            modelBuilder.Entity<Lyric>(ConfigureLyric);
+            modelBuilder.Entity<AlbumArtist>(ConfigureAlbumArtist);
+            modelBuilder.Entity<TrackArtist>(ConfigureTrackrtist);
         }
 
         private void ConfigureArtist(EntityTypeBuilder<Artist> config)
@@ -94,6 +102,44 @@ namespace Moelyrics.Web.Infrastructure
 
             config.Metadata.FindNavigation(nameof(Track.Artists))
                 .SetPropertyAccessMode(PropertyAccessMode.Field);
+        }
+
+        private void ConfigureLyric(EntityTypeBuilder<Lyric> config)
+        {
+            config.ToTable("lyric");
+
+            config.HasKey(o => o.Id);
+
+            config.Ignore(o => o.DomainEvents);
+
+            config.Property<int>("TrackId")
+                .IsRequired();
+        }
+
+        private void ConfigureAlbumArtist(EntityTypeBuilder<AlbumArtist> config)
+        {
+            config.ToTable("albumArtist");
+
+            config.HasOne(o => o.Album)
+                .WithMany("Artists")
+                .HasForeignKey(o => o.AlbumId);
+
+            config.HasOne(o => o.Artist)
+                .WithMany("Albums")
+                .HasForeignKey(o => o.ArtistId);
+        }
+
+        private void ConfigureTrackrtist(EntityTypeBuilder<TrackArtist> config)
+        {
+            config.ToTable("trackArtist");
+
+            config.HasOne(o => o.Track)
+                .WithMany("Tracks")
+                .HasForeignKey(o => o.TrackId);
+
+            config.HasOne(o => o.Artist)
+                .WithMany("Artists")
+                .HasForeignKey(o => o.ArtistId);
         }
 
         public async Task<bool> SaveEntitiesAsync(CancellationToken cancellationToken = default(CancellationToken))

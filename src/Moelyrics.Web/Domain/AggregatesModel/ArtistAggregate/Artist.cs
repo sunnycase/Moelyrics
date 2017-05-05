@@ -1,4 +1,5 @@
 ﻿using Moelyrics.Web.Domain.AggregatesModel.AlbumAggregate;
+using Moelyrics.Web.Domain.AggregatesModel.TrackAggregate;
 using Moelyrics.Web.Domain.Infrastructure;
 using System;
 using System.Collections.Generic;
@@ -11,11 +12,15 @@ namespace Moelyrics.Web.Domain.AggregatesModel.ArtistAggregate
     {
         public string Name { get; private set; }
 
-        private List<ArtistAlbum> _albums;
+        private List<AlbumArtist> _albums;
         public IEnumerable<Album> Albums => _albums.Select(o => o.Album).ToList().AsReadOnly();
+
+        private List<TrackArtist> _tracks;
+        public IEnumerable<Track> Tracks => _tracks.Select(o => o.Track).ToList().AsReadOnly();
+
         protected Artist()
         {
-            _albums = new List<ArtistAlbum>();
+            _albums = new List<AlbumArtist>();
         }
 
         public Artist(string name)

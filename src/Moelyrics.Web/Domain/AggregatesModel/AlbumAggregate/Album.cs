@@ -9,7 +9,7 @@ namespace Moelyrics.Web.Domain.AggregatesModel.AlbumAggregate
 {
     public class Album : Entity, IAggregateRoot
     {
-        private List<ArtistAlbum> _artists;
+        private List<AlbumArtist> _artists;
         public IEnumerable<Artist> Artists => _artists.Select(o => o.Artist).ToList().AsReadOnly();
 
         public string Title { get; private set; }
@@ -17,7 +17,7 @@ namespace Moelyrics.Web.Domain.AggregatesModel.AlbumAggregate
 
         protected Album()
         {
-            _artists = new List<ArtistAlbum>();
+            _artists = new List<AlbumArtist>();
         }
 
         public Album(string title, int? year = null)
